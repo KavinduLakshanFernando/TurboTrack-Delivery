@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Route and Distance Calculator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    #map {
+      height: 500px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+<div class="container mt-4">
+  <h2 class="text-center">Route and Distance Calculator</h2>
+  <div class="mb-3">
+    <label for="myLocation" class="form-label">Current Location</label>
+    <input type="text" class="form-control" id="myLocation" placeholder="Fetching current location..." readonly>
+  </div>
+  <div class="mb-3">
+    <label for="pickupPoint" class="form-label">Pickup Point</label>
+    <input type="text" class="form-control" id="pickupPoint" placeholder="Enter pickup location">
+  </div>
+  <div class="mb-3">
+    <label for="deliveryPoint" class="form-label">Delivery Point</label>
+    <input type="text" class="form-control" id="deliveryPoint" placeholder="Enter delivery location">
+  </div>
+  <button class="btn btn-primary" onclick="calculateRoute()">Show Route</button>
+  <p class="mt-3" id="distanceOutput"></p>
+  <div id="map"></div>
+</div>
+
+<script>
+  let map, directionsService, directionsRenderer, autocompletePickup, autocompleteDelivery;
+
+  function initMap() {
+    map = new google.maps.Map(document.getElementById("map"), {
+      center: { lat: 37.7749, lng: -122.4194 }, // Default center
+      zoom: 7,
+    });
+
+    directionsService = new google.maps.DirectionsService();
+    directionsRenderer = new google.maps.DirectionsRenderer();
+    directionsRenderer.setMap(map);
+
+    // Autocomplete for pickup and delivery
+    autocompletePickup = new google.maps.places.Autocomplete(document.getElementById("pickupPoint"));
+    autocompleteDelivery = new google.maps.places.Autocomplete(document.getElementById("deliveryPoint"));
+
+    // Get current location
+    getCurrentLocation();
+  }
+
+  function getCurrentLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+
+        const latLng = new google.maps.LatLng(lat, lng);
+
+        const geocoder = new google.maps.Geocoder();
+        geocoder.geocode({ location: latLng }, function (results, status) {
+          if (status === google.maps.GeocoderStatus.OK) {
+            if (results[0]) {
+              const currentAddress = results[0].formatted_address;
+              document.getElementById("myLocation").value = currentAddress;
+              document.getElementById("pickupPoint").value = currentAddress; // Optional: autofill pickup
+            }
+          } else {
+            alert("Geocoder failed: " + status);
+          }
+        });
+      }, function (error) {
+        alert("Error getting location: " + error.message);
+      });
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  }
+
+  function calculateRoute() {
+    const pickup = document.getElementById("pickupPoint").value;
+    const delivery = document.getElementById("deliveryPoint").value;
+
+    if (!pickup || !delivery) {
+      alert("Please enter both pickup and delivery locations.");
+      return;
+    }
+
+    const request = {
+      origin: pickup,
+      destination: delivery,
+      travelMode: google.maps.TravelMode.DRIVING,
+    };
+
+    directionsService.route(request, function (result, status) {
+      if (status === google.maps.DirectionsStatus.OK) {
+        directionsRenderer.setDirections(result);
+        const distance = result.routes[0].legs[0].distance.text;
+        document.getElementById("distanceOutput").innerText = "Distance: " + distance;
+      } else {
+        alert("Could not retrieve route: " + status);
+      }
+    });
+  }
+</script>
+
+<!-- Replace the key below with your own valid Google Maps JavaScript API key -->
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbJw1DZky2FxqwriREnp9yPpBW1RHu_3g&libraries=places&callback=initMap">
+</script>
+</body>
+</html>

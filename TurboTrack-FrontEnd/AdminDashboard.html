@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TurboTrack Admin Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #4361ee;
+            --text: #333;
+            --bg: #ffffff;
+            --accent: #3f37c9;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background-color: var(--bg);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-button {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text);
+        }
+
+        :root {
+            --primary: #4361ee;
+            --primary-light: #eaefff;
+            --primary-dark: #3f37c9;
+            --text: #333;
+            --text-light: #6c757d;
+            --bg: #ffffff;
+            --bg-light: #f8f9fa;
+            --danger: #ef476f;
+            --success: #06d6a0;
+            --warning: #ffd166;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text);
+            transition: var(--transition);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 5%;
+            background-color: var(--bg);
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+        .navbar>ul{
+            margin-left: 400px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo:hover {
+            color: var(--primary-dark);
+            transform: scale(1.02);
+        }
+
+        .logo i {
+            font-size: 1.4rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            margin-bottom: 0;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            font-size: 1rem;
+            transition: var(--transition);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .right-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        thead {
+            background-color: #f3f4f6;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px 16px;
+            font-weight: 500;
+            color: #374151;
+            font-size: 14px;
+            border-bottom: 1px solid #e5e7eb;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 14px;
+            color: #4b5563;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background-color: #f9fafb;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+            font-family: Arial, sans-serif;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #eef;
+        }
+        .delete-btn {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .delete-btn:hover {
+            background-color: #ff0000;
+        }
+        form {
+            margin-top: 20px;
+        }
+        h2 {
+            margin-top: 40px;
+        }
+        input, select {
+            padding: 6px;
+            margin: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 200px;
+        }
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+
+        .nav-button {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--text);
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-button:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .mobile-menu-button {
+            display: none;
+        }
+
+        .dark-theme .order-card {
+            border: 1px solid #2c2c2c;
+        }
+
+        .dark-theme .table-header {
+            border-bottom: 1px solid #2c2c2c;
+        }
+
+        .dark-theme .order-row {
+            border-bottom: 1px solid #2c2c2c;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                flex-direction: column;
+                align-items: center;
+                background-color: var(--bg);
+                padding: 1.5rem 0;
+                gap: 1rem;
+                transform: translateY(-150%);
+                transition: transform 0.3s ease;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+            }
+
+            .mobile-menu-button {
+                display: flex;
+            }
+
+            .order-row > div {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                padding: 0.25rem 0;
+            }
+
+            .order-row > div::before {
+                content: attr(data-label);
+                font-weight: 600;
+                color: var(--text-light);
+            }
+        }
+
+        .location-badge i {
+            color: #ff9800;
+        }
+        /* Dark mode adjustments */
+        .dark-theme .order-card {
+            background-color: #1e1e24;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .dark-theme .table-header {
+            background-color: rgba(30, 30, 36, 0.6);
+            border-bottom: 1px solid #2c2c3a;
+        }
+
+        .dark-theme .order-row {
+            border-bottom: 1px solid #2c2c3a;
+        }
+
+        .dark-theme .order-row:hover {
+            background-color: rgba(76, 201, 240, 0.05);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .order-row > div {
+                padding: 0.5rem 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .order-row > div {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                padding: 0.5rem 0;
+            }
+
+            .order-row > div::before {
+                content: attr(data-label);
+                font-weight: 600;
+                color: var(--text-light);
+            }
+        }
+
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                flex-direction: column;
+                align-items: center;
+                background-color: var(--bg);
+                padding: 2rem 0;
+                gap: 1.5rem;
+                transform: translateY(-150%);
+                transition: transform 0.3s ease;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+            }
+
+            .mobile-menu-button {
+                display: block;
+            }
+
+            .right-section {
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        .stats-card {
+            color: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .stat-title {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        .dashboard-title {
+            color: blue;
+            font-style: italic;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        th {
+            color: blue;
+        }
+
+        .priority-emergency {
+            font-weight: bold;
+        }
+
+        .table-row {
+            background-color: #d3d3d3;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid p-0">
+
+    <nav class="navbar">
+        <a href="#" class="logo">
+            <i class="fas fa-bolt"></i>
+            TurboTrack
+        </a>
+
+        <ul class="nav-links">
+            <li><a href="AdminDashboard.html">Home</a></li>
+            <li><a href="AdminViewDriverData.html">Drivers</a></li>
+            <li><a href="AdminViewCustomerData.html">Customers</a></li>
+            <li><a href="#">Orders</a></li>
+            <li><a href="#">Profile</a></li>
+        </ul>
+
+        <div class="right-section">
+            <button class="nav-button mobile-menu-button">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Blue separator line -->
+    <div class="border-bottom border-primary border-3"></div>
+
+    <!-- Dashboard Content -->
+    <div class="container mt-3">
+        <h4 class="dashboard-title">Admin Dashboard</h4>
+
+        <!-- Stats Cards -->
+        <div class="row mb-4">
+            <div class="col-md-3 mb-3">
+                <div class="stats-card bg-success">
+                    <div class="stat-title">Today Orders</div>
+                    <div class="stat-value">10</div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="stats-card" style="background-color: #b33939;">
+                    <div class="stat-title">Active Drivers</div>
+                    <div class="stat-value">20</div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="stats-card bg-dark">
+                    <div class="stat-title">All Users</div>
+                    <div class="stat-value">50</div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="stats-card bg-primary">
+                    <div class="stat-title">Request</div>
+                    <div class="stat-value">15</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Orders -->
+        <h5 class="mb-3">Recent Orders</h5>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>OrderNo</th>
+                    <th>Operator</th>
+                    <th>Location</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                    <th>prioritization</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="table-row">
+                    <td>#3306</td>
+                    <td>Kavindu</td>
+                    <td>Kaluthara</td>
+                    <td>2025/04/10</td>
+                    <td>Completed</td>
+                    <td class="priority-emergency">Emergency</td>
+                </tr>
+                <tr class="table-row">
+                    <td>#3307</td>
+                    <td>Lakshan</td>
+                    <td>Panadura</td>
+                    <td>2025/04/09</td>
+                    <td>Completed</td>
+                    <td>Normal</td>
+                </tr>
+                <tr class="table-row">
+                    <td>#3308</td>
+                    <td>Fernando</td>
+                    <td>Mathugama</td>
+                    <td>2025/04/08</td>
+                    <td>Canceled</td>
+                    <td>Normal</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS Bundle -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Mobile menu toggle
+    const mobileMenuButton = document.querySelector('.mobile-menu-button');
+    const navLinks = document.querySelector('.nav-links');
+
+    mobileMenuButton.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+
+    // Theme toggle
+    const themeToggle = document.querySelector('.theme-toggle');
+
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-theme');
+        if (document.body.classList.contains('dark-theme')) {
+            themeToggle.textContent = '☀️';
+        } else {
+            themeToggle.textContent = '🌙';
+        }
+    });
+</script>
+
+</body>
+</html>
