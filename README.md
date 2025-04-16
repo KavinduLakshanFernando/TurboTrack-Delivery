@@ -24,3 +24,5 @@ Digital Wallets (PayPal)
 Bank Transfers
 Cash on Delivery (COD)
 
+
+
