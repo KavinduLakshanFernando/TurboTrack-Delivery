@@ -24,5 +24,7 @@ Digital Wallets (PayPal)
 Bank Transfers
 Cash on Delivery (COD)
 
-https://youtu.be/5R0kD_rZ88M
+[https://youtu.be/5R0kD_rZ88M](https://youtu.be/5R0kD_rZ88M?si=x4noM1FjHRJoG9be)
+
+![Screenshot 2025-04-16 175252](https://github.com/user-attachments/assets/398115a0-c983-4155-9ad1-4e7622af9ee1)
 
